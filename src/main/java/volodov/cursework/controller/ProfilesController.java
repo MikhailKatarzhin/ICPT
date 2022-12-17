@@ -101,7 +101,7 @@ public class ProfilesController {
     }
 
     @PostMapping("/change_personality")
-    public String changePersonality(@ModelAttribute Personality personality) {
+    public String changePersonality(@ModelAttribute Personality personality, ModelMap model) {
         personalityService.save(personality);
         return "redirect:/profile";
     }

@@ -9,58 +9,57 @@
 </head>
 <body>
 <div th:insert="~{fragments/navigation_fragments  :: navbar}"></div>
-<form th:action="@{/sign_up}" method="post" class="m-auto col-3 text-center">
+<form th:action="@{/administration/drivers/add}" method="post" class="m-auto col-3 text-center">
     <div th:object="${user}" >
-        <h1 class="h3 mb-3 fw-normal">Пожалуйста зарегистрируйтесь!</h1>
+        <h1 class="h3 mb-3 fw-normal">Регистрация нового водителя</h1>
 
         <div class="mt-1 mb-1 text-muted" th:if="${param.error}">Неверно заполнены поля.</div>
-        <div class="mt-1 mb-1 text-muted" th:if="${param.logout}">You have been logged out.</div>
         <div class="form-floating">
             <input type="text" th:class="'form-control'+(${usernameExistsError!=null}?' is-invalid':'')"
                    id="floatingUsername" th:value="*{username}" name="username" placeholder="Username" required maxlength="25" minlength="4">
-            <label for="floatingUsername" th:text="${usernameExistsError==null}?'Никнейм':${usernameExistsError}"></label>
+            <label for="floatingUsername" th:text="${usernameExistsError==null}?'Никнейм водителя':${usernameExistsError}"></label>
         </div>
         <div class="form-floating">
             <input type="password" th:class="'form-control'+(${passwordsAreDifferent!=null} or ${passwordIsBlankError}?' is-invalid':'')"
                    id="floatingPassword" th:value="*{password}" name="password" placeholder="Password" required maxlength="50" minlength="8">
             <label for="floatingPassword"
-                   th:text="${passwordIsBlankError==null}?'Пароль':${passwordIsBlankError}"></label>
+                   th:text="${passwordIsBlankError==null}?'Пароль водителя ':${passwordIsBlankError}"></label>
         </div>
         <div class="form-floating">
             <input type="password" th:class="'form-control'+(${passwordsAreDifferent!=null}?' is-invalid':'')"
                    id="floatingConfirmPassword" name="confirmPassword" placeholder="Confirm password" required maxlength="50">
             <label for="floatingConfirmPassword"
-                   th:text="${passwordsAreDifferent==null}?'Подтверждение пароля':${passwordsAreDifferent}"></label>
+                   th:text="${passwordsAreDifferent==null}?'Подтверждение пароля водителя':${passwordsAreDifferent}"></label>
         </div>
         <div class="form-floating">
             <input type="email" th:class="'form-control'+(${emailExistsError!=null}?' is-invalid':'')"
                    id="floatingEmail" th:value="*{email}" name="email" placeholder="Email" required maxlength="50" minlength="8">
-            <label for="floatingEmail" th:text="${emailExistsError==null}?'Электронный адрес':${emailExistsError}"></label>
+            <label for="floatingEmail" th:text="${emailExistsError==null}?'Электронный адрес водителя':${emailExistsError}"></label>
         </div>
     </div>
     <div th:object="${personality}" >
         <div class="form-floating">
             <input type="text" th:class="'form-control'+(${personalityExistsError!=null}?' is-invalid':'')"
                 id="floatingSeriesAndNumber" th:value="*{seriesAndNumber}" name="seriesAndNumber" placeholder="Series and number" required maxlength="10" minlength='10'>
-            <label for="floatingSeriesAndNumber" th:text="${personalityExistsError==null}?'Серия и номер паспорта':${personalityExistsError}"></label>
+            <label for="floatingSeriesAndNumber" th:text="${personalityExistsError==null}?'Серия и номер паспорта водителя':${personalityExistsError}"></label>
         </div>
         <div class="form-floating">
             <input type="text" th:class="'form-control'+(${firstnameIsBlankError!=null}?' is-invalid':'')"
                    id="floatingFirstname" th:value="*{firstname}" name="firstname" placeholder="Firstname" required maxlength="45" minlength="3">
-            <label for="floatingFirstname" th:text="${firstnameIsBlankError==null}?'Имя':${firstnameIsBlankError}"></label>
+            <label for="floatingFirstname" th:text="${firstnameIsBlankError==null}?'Имя водителя':${firstnameIsBlankError}"></label>
         </div>
         <div class="form-floating">
             <input type="text" th:class="'form-control'+(${lastnameIsBlankError!=null}?' is-invalid':'')"
                    id="floatingLastname" th:value="*{lastname}" name="lastname" placeholder="Lastname" required maxlength="45" minlength="3">
-            <label for="floatingLastname" th:text="${lastnameIsBlankError==null}?'Фамилия':${lastnameIsBlankError}"></label>
+            <label for="floatingLastname" th:text="${lastnameIsBlankError==null}?'Фамилия водителя':${lastnameIsBlankError}"></label>
         </div>
         <div class="form-floating">
             <input type="text" th:class="'form-control'+(${PatronymicIsInputError!=null}?' is-invalid':'')"
                    id="floatingPatronymic" th:value="*{patronymic}" name="patronymic" placeholder="Patronymic" maxlength="45">
-            <label for="floatingPatronymic" th:text="${PatronymicIsInputError==null}?'Отчество':${PatronymicIsInputError}"></label>
+            <label for="floatingPatronymic" th:text="${PatronymicIsInputError==null}?'Отчество водителя':${PatronymicIsInputError}"></label>
         </div>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегистрироваться</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Добавить водителя</button>
 </form>
 <script type="text/javascript"
         src="/webjars/jquery/3.6.0/jquery.min.js"></script>

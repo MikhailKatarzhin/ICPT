@@ -1,50 +1,60 @@
 package volodov.cursework.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import volodov.cursework.controller.paging.AbstractPrimaryPagingController;
 import volodov.cursework.model.Personality;
 import volodov.cursework.model.User;
 import volodov.cursework.service.PersonalityService;
 import volodov.cursework.service.UserService;
 
-@RequestMapping("/sign_up")
+import java.util.List;
+
 @Controller
-public class SignUpController {
+@RequestMapping("/administration/drivers")
+public class AdministrationDriverController extends AbstractPrimaryPagingController {
 
     private final UserService userService;
     private final PersonalityService personalityService;
 
-    @Autowired
-    public SignUpController(UserService userService, PersonalityService personalityService) {
+    public AdministrationDriverController(UserService userService, PersonalityService personalityService) {
         this.userService = userService;
         this.personalityService = personalityService;
     }
+///********************! Address management !********************
 
     @GetMapping
-    public String signUp(ModelMap model) {
-        if (userService.getRemoteUser() != null)
-            return "redirect:/profile";
+    public String managementByOffset() {
+        return "redirect:/administration/drivers/list/1";
+    }
+
+    @GetMapping("/list/{currentPage}")
+    public String managementByOffset(@PathVariable Long currentPage, ModelMap model) {
+        if (currentPage < 1L)
+            return "redirect:/administration/drivers/list/1";
+        Long nPage = pageCount();
+        if (currentPage > nPage)
+            return "redirect:/administration/drivers/list/" + nPage;
+        model.addAttribute("nPage", nPage);
+        model.addAttribute("currentPage", currentPage);
+        List<User> driverList = userService.driverListByNumberPageList(currentPage);
+        model.addAttribute("drivers", driverList);
+        return "administration/drivers";
+    }
+
+    @GetMapping("/add")
+    public String driverAddForm(ModelMap model) {
         model.addAttribute("user", new User());
         model.addAttribute("personality", new Personality());
-        return "sign_up";
+        return "administration/addDriver";
     }
 
     @Transactional
-    @PostMapping
-    public String addUser(@RequestParam String confirmPassword, User user, Personality personality, ModelMap model) {
+    @PostMapping("/add")
+    public String driverAdd(@RequestParam String confirmPassword, User user, Personality personality, ModelMap model) {
 
-        model = checkRegistrationData(confirmPassword, user, personality, model, userService, personalityService);
-        if (model.size() > 4) {
-            return "sign_up";
-        }
-        userService.signUpConsumer(user, personality);
-        return "redirect:/sign_in";
-    }
-
-    public static ModelMap checkRegistrationData(@RequestParam String confirmPassword, User user, Personality personality, ModelMap model, UserService userService, PersonalityService personalityService) {
         if (userService.getByUsername(user.getUsername()) != null || !user.getUsername().matches("[A-Za-z0-9 А-Яа-я]{3,45}")) {
             model.addAttribute("usernameExistsError", "Username input error");
         }
@@ -77,7 +87,22 @@ public class SignUpController {
             personality.setPatronymic("Отсутствует");
         if (personality.getPatronymic().isEmpty() || personality.getLastname() == null || !personality.getPatronymic().matches("[ А-Яа-я]{2,45}$")) {
             model.addAttribute("PatronymicIsInputError", "Patronymic input error! Только кириллица или ничего");
+        }        if (model.size() > 4) {
+            return "administration/addDriver";
         }
-        return model;
+        userService.signUpDriver(user, personality);
+        return "redirect:/administration/drivers/list/1";
+    }
+
+///********************! Pagination addresses !********************
+
+    @Override
+    protected Long pageCount() {
+        return userService.pageCountByRoleId(2L);
+    }
+
+    @Override
+    protected String getPrefix() {
+        return "/administration/drivers";
     }
 }

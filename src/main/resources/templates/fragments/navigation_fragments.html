@@ -13,10 +13,10 @@
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                         <li class="nav-item" sec:authorize="hasAuthority('CONSUMER')">
-                            <a class="nav-link active" aria-current="page" th:href="@{/contract}">Contract management</a>
+                            <a class="nav-link active" aria-current="page" th:href="@{/contract}">Для потребителей</a>
                         </li>
                         <li class="nav-item" sec:authorize="hasAuthority('PROVIDER')">
-                            <a class="nav-link active" aria-current="page" th:href="@{/tariff}">Tariff management</a>
+                            <a class="nav-link active" aria-current="page" th:href="@{/tariff}">Для водителей</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -41,16 +41,16 @@
                                 </form></li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown" sec:authorize="hasAuthority('ADMINISTRATOR')">
+                        <li class="nav-item dropdown" sec:authorize="hasAuthority('АДМИНИСТРАТОР')">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Administration
+                                Администрирование
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                <li><form th:action="@{/address}">
-                                    <button type="submit" class="dropdown-item">Address management</button>
+                                <li><form th:action="@{/administration/drivers}">
+                                    <button type="submit" class="dropdown-item">Перечень водителей</button>
                                 </form></li>
-                                <li><form th:action="@{/transmitter}">
-                                    <button type="submit" class="dropdown-item">Transmitter management</button>
+                                <li><form th:action="@{/administration/drivers/add}">
+                                    <button type="submit" class="dropdown-item">Добавить водителя</button>
                                 </form></li>
                             </ul>
                         </li>
@@ -73,7 +73,7 @@
                     >Предыдущая страница</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link">To page: </a>
+                    <a class="page-link">На страницу №: </a>
                 </li>
                 <li class="page-item">
                     <input type="number" name="toPage" id="toPage" min="1" th:max="${nPage}" th:value="${currentPage}"

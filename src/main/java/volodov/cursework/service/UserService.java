@@ -13,6 +13,10 @@ import volodov.cursework.repo.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.List;
+
+import static volodov.cursework.config.ProjectConstants.ROW_COUNT;
+
 @Service
 public class UserService{
 
@@ -100,5 +104,14 @@ public class UserService{
         user = userRepository.save(user);
         logger.info("User {}[id:{}] change password to {}", user.getUsername(), user.getId(), password);
         return user;
+    }
+
+    public Long pageCountByRoleId(Long roleId){
+        long nPage = userRepository.countByRoleId(roleId) / ROW_COUNT + (userRepository.countByRoleId(roleId) % ROW_COUNT == 0 ? 0 : 1);
+        return nPage == 0 ? nPage + 1 : nPage;
+    }
+
+    public List<User> driverListByNumberPageList(long currentPage){
+        return userRepository.selectByRoleIdAndLimitOffset(2L, ROW_COUNT, (currentPage - 1) * ROW_COUNT);
     }
 }
