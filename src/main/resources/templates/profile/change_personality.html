@@ -14,6 +14,8 @@
     <form th:action="@{/profile/change_personality}" th:object="${personality}" method="post" class="m-auto col-3 text-center">
         <h1 class="h3 mb-3 fw-normal">Изменение ваших ФИО</h1>
 
+        <input type="hidden" name="seriesAndNumber" id="seriesAndNumber" th:field="*{seriesAndNumber}">
+        <input type="hidden" name="userId" id="userId" th:field="*{user}">
         <h5 th:text="'Установленное имя: '+*{firstname}"></h5>
         <div class="form-floating">
             <input type="text" class="form-control"
