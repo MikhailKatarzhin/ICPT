@@ -1,4 +1,4 @@
-package volodov.cursework.controller;
+package volodov.cursework.controller.administration;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +23,7 @@ public class AdministrationDriverController extends AbstractPrimaryPagingControl
         this.userService = userService;
         this.personalityService = personalityService;
     }
-///********************! Address management !********************
+///********************! Управление водителями !********************
 
     @GetMapping
     public String managementByOffset() {
@@ -94,7 +94,7 @@ public class AdministrationDriverController extends AbstractPrimaryPagingControl
         return "redirect:/administration/drivers/list/1";
     }
 
-///********************! Pagination addresses !********************
+///********************! Pagination !********************
 
     @Override
     protected Long pageCount() {
