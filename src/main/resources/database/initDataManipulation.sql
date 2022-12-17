@@ -6,9 +6,9 @@ ON CONFLICT (id)
     DO UPDATE SET id = Excluded.id;
 
 INSERT INTO
-    "user" (id, email, role_id, password)
+    "user" (id, email, username, role_id, password)
 VALUES
-    (0, 'volodov@mail.ru', 1, '$2a$10$m/GwtXT2pD5VeGgpdGkNLeZVg9C0NG/sRhiPkkvKXrZj6wXtiUJze')
+    (0, 'volodov@mail.ru', 'Пофессор Володов', 1, '$2a$10$m/GwtXT2pD5VeGgpdGkNLeZVg9C0NG/sRhiPkkvKXrZj6wXtiUJze')
 ON CONFLICT (id)
     DO NOTHING;
 

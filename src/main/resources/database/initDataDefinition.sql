@@ -9,15 +9,18 @@ CREATE TABLE IF NOT EXISTS role
 CREATE TABLE IF NOT EXISTS "user"
 (
     id bigserial NOT NULL,
+    username character varying(45) COLLATE pg_catalog.default NOT NULL,
     email character varying(50) COLLATE pg_catalog.default NOT NULL,
     role_id bigint NOT NULL DEFAULT 1,
     password character varying(60) COLLATE pg_catalog.default NOT NULL,
     CONSTRAINT PK_User_Id PRIMARY KEY (id),
+    CONSTRAINT UQ_User_Username UNIQUE (username),
     CONSTRAINT UQ_Email UNIQUE (email),
     CONSTRAINT FK_User_has_Role FOREIGN KEY (role_id)
     REFERENCES role (id) MATCH SIMPLE
     ON UPDATE CASCADE
     ON DELETE NO ACTION,
+    CONSTRAINT "CK_User_Username" CHECK (username::text ~ '[A-Za-z0-9 А-Яа-я]{3,45}'::text),
     CONSTRAINT CK_Email CHECK (email::text ~ '^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$'::text),
     CONSTRAINT CK_Password_strength CHECK (password::text ~ '^[A-Za-z0-9#$&\/%-\._]{8,60}$'::text)
     );
