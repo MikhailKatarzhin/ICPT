@@ -2,8 +2,10 @@ package volodov.cursework.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import volodov.cursework.model.Personality;
 
+@Repository
 public interface PersonalityRepository extends JpaRepository<Personality, String> {
 
     @Query(

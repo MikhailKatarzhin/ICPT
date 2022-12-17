@@ -43,15 +43,6 @@ CREATE TABLE IF NOT EXISTS personality
     CONSTRAINT CK_Personality_Series_and_number CHECK (series_and_number::text ~ '^[0-9]{10}$'::text)
     );
 
-CREATE TABLE IF NOT EXISTS bill_status
-(
-    id bigserial NOT NULL,
-    name character varying(45) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT PK_Bill_status_Id PRIMARY KEY (id),
-    CONSTRAINT UQ_Bill_status_Name UNIQUE (name),
-    CONSTRAINT CH_Bill_status_Name CHECK (name::text ~ '^[А-Яа-я]{3,45}$'::text)
-);
-
 CREATE TABLE IF NOT EXISTS trip_status
 (
     id bigserial NOT NULL,
@@ -61,36 +52,59 @@ CREATE TABLE IF NOT EXISTS trip_status
     CONSTRAINT CH_Trip_status_Name CHECK (name::text ~ '^[А-Яа-я]{3,45}$'::text)
 );
 
-CREATE TABLE IF NOT EXISTS route
-(
-    id bigserial NOT NULL,
-    arrival_to character varying(45) COLLATE pg_catalog.default NOT NULL,
-    arrival_from character varying(45) COLLATE pg_catalog.default NOT NULL,
-    path_length bigint NOT NULL,
-    cost bigint NOT NULL,
-    CONSTRAINT PK_Route_Id PRIMARY KEY (id),
-    CONSTRAINT CH_Route_Arrival_to CHECK (arrival_to::text ~ '^[А-Яа-я [punct]{4,45}$'::text),
-    CONSTRAINT CH_Route_Arrival_from CHECK (arrival_from::text ~ '^[А-Яа-я [punct]{4,45}$'::text),
-    CONSTRAINT CH_Route_Path_length CHECK (route.path_length > 0 AND route.path_length < 10000),
-    CONSTRAINT CH_Route_Cost CHECK (route.cost >= 0 AND route.cost < 200000)
-);
-
 CREATE TABLE IF NOT EXISTS trip
 (
     id bigserial NOT NULL,
     status_id bigint NOT NULL,
     places smallint NOT NULL,
     driver_id bigint NOT NULL,
+    departure_time TIMESTAMP NOT NULL,
     CONSTRAINT PK_Trip_Id PRIMARY KEY (id),
     CONSTRAINT FK_Trip_has_Status FOREIGN KEY (status_id)
         REFERENCES trip_status (id) MATCH SIMPLE
         ON UPDATE cascade
         ON DELETE NO ACTION,
     CONSTRAINT CH_Trip_Places CHECK ( places > 0 AND places < 201 ),
+    CONSTRAINT CH_Route_Departure_time CHECK (departure_time > now()),
     CONSTRAINT FK_Trip_occupies_Driver FOREIGN KEY (driver_id)
         REFERENCES "user" (id) MATCH SIMPLE
         ON UPDATE cascade
         ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS location
+(
+    id bigserial NOT NULL,
+    name character varying(45) COLLATE pg_catalog.default NOT NULL,
+    CONSTRAINT PK_Location_Id PRIMARY KEY (id),
+    CONSTRAINT CH_Location_Name CHECK (name::text ~ '^[А-Яа-я [punct]{4,45}$'::text)
+);
+
+CREATE TABLE IF NOT EXISTS route_sequence
+(
+    id bigserial NOT NULL,
+    trip_id bigint NOT NULL,
+    location_id bigint NOT NULL,
+    arrival_time TIMESTAMP NOT NULL,
+    CONSTRAINT PK_Route_Sequence_Id PRIMARY KEY (id),
+    CONSTRAINT FK_Route_sequence_belongs_to_Trip FOREIGN KEY (trip_id)
+        REFERENCES trip (id) MATCH SIMPLE
+        ON UPDATE cascade
+        ON DELETE NO ACTION,
+    CONSTRAINT FK_Route_sequence_has_Location FOREIGN KEY (location_id)
+        REFERENCES location (id) MATCH SIMPLE
+        ON UPDATE cascade
+        ON DELETE NO ACTION,
+    CONSTRAINT CH_Route_sequence_Arrival_time CHECK (arrival_time > now())
+);
+
+CREATE TABLE IF NOT EXISTS bill_status
+(
+    id bigserial NOT NULL,
+    name character varying(45) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT PK_Bill_status_Id PRIMARY KEY (id),
+    CONSTRAINT UQ_Bill_status_Name UNIQUE (name),
+    CONSTRAINT CH_Bill_status_Name CHECK (name::text ~ '^[А-Яа-я]{3,45}$'::text)
 );
 
 CREATE TABLE IF NOT EXISTS bill
@@ -112,26 +126,4 @@ CREATE TABLE IF NOT EXISTS bill
         REFERENCES "user" (id) MATCH SIMPLE
         ON UPDATE cascade
         ON DELETE NO ACTION
-);
-
-CREATE TABLE IF NOT EXISTS route_sequence
-(
-    id bigserial NOT NULL,
-    trip_id bigint NOT NULL,
-    rout_id bigint NOT NULL,
-    sequence_number bigint NOT NULL,
-    arrival_time TIMESTAMP NOT NULL,
-    departure_time TIMESTAMP NOT NULL,
-    CONSTRAINT PK_Route_Sequence_Id PRIMARY KEY (id),
-    CONSTRAINT FK_Route_sequence_belongs_to_Trip FOREIGN KEY (trip_id)
-        REFERENCES trip (id) MATCH SIMPLE
-        ON UPDATE cascade
-        ON DELETE NO ACTION,
-    CONSTRAINT FK_Route_sequence_has_Route FOREIGN KEY (rout_id)
-        REFERENCES route (id) MATCH SIMPLE
-        ON UPDATE cascade
-        ON DELETE NO ACTION,
-    CONSTRAINT CH_Route_Arrival_time CHECK (arrival_time > now() AND arrival_time > route_sequence.departure_time),
-    CONSTRAINT CH_Route_Departure_time CHECK (route_sequence.departure_time > now() AND route_sequence.departure_time < route_sequence.arrival_time),
-    CONSTRAINT CH_Sequence_number CHECK ( sequence_number > 0 )
 );
