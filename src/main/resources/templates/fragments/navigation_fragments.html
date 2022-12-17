@@ -6,7 +6,7 @@
     <div th:fragment="navbar">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" th:href="@{/}">Home page</a>
+                <a class="navbar-brand" th:href="@{/}">Домашняя сраница</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -20,24 +20,24 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Profile
+                                Профиль
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown" sec:authorize="isAuthenticated()">
-                                <li><form th:action="@{/templates/profile}">
+                                <li><form th:action="@{/profile}">
                                     <button type="submit" class="dropdown-item"
-                                            th:text="'Profile of '+${#httpServletRequest.remoteUser}">
+                                            th:text="'Профиль пользователя '+${#httpServletRequest.remoteUser}">
                                     </button></form></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><form th:action="@{/logout}" th:method="post">
-                                    <button type="submit" class="dropdown-item">Sign out</button>
+                                    <button type="submit" class="dropdown-item">Выйти</button>
                                 </form></li>
                             </ul>
                             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown" sec:authorize="isAnonymous()">
                                 <li><form th:action="@{/sign_in}">
-                                    <button type="submit" class="dropdown-item">Sign in</button>
+                                    <button type="submit" class="dropdown-item">Авторизоваться</button>
                                 </form></li>
                                 <li><form th:action="@{/sign_up}">
-                                    <button type="submit" class="dropdown-item">Sign up</button>
+                                    <button type="submit" class="dropdown-item">Зарегистрироваться</button>
                                 </form></li>
                             </ul>
                         </li>
@@ -66,11 +66,11 @@
             <ul class="pagination">
                 <li class="page-item" th:if="${currentPage > 1}">
                     <a class="page-link" th:href="@{/__${prefix}__/first_page}"
-                    >First page</a>
+                    >Первая страница</a>
                 </li>
                 <li class="page-item" th:if="${currentPage > 2}">
                     <a class="page-link" th:href="@{/__${prefix}__/list/__${currentPage}__/preview_page}"
-                    >Previous page</a>
+                    >Предыдущая страница</a>
                 </li>
                 <li class="page-item">
                     <a class="page-link">To page: </a>
@@ -81,11 +81,11 @@
                 </li>
                 <li class="page-item" th:if="${currentPage < (nPage - 1)}">
                     <a class="page-link" th:href="@{/__${prefix}__/list/__${currentPage}__/next_page}"
-                    >Next page</a>
+                    >Следующая страница</a>
                 </li>
                 <li class="page-item" th:if="${currentPage < nPage}">
                     <a class="page-link" th:href="@{/__${prefix}__/last_page}"
-                    >Last page</a>
+                    >Последняя страница</a>
                 </li>
             </ul>
         </nav>

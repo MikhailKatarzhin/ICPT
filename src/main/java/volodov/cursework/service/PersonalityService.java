@@ -21,6 +21,12 @@ public class PersonalityService{
         return personalityRepository.getBySeriesAndNumber(seriesAndNumber);
     }
 
+    public Personality getByUserId(Long userId){
+        if (personalityRepository.countByUserId(userId) == 0)
+            return null;
+        return personalityRepository.getByUserId(userId);
+    }
+
     public Personality save(Personality personality){
         if (personality == null)
             return null;
