@@ -37,4 +37,7 @@ public class User {
 
     @OneToMany(mappedBy = "consumer")
     private Set<Bill> bills = new LinkedHashSet<>();
+
+    @Column(name = "username", nullable = false, length = 45)
+    private String username;
 }
