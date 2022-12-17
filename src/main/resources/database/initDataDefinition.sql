@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS "user"
     REFERENCES role (id) MATCH SIMPLE
     ON UPDATE CASCADE
     ON DELETE NO ACTION,
-    CONSTRAINT "CK_User_Username" CHECK (username::text ~ '[A-Za-z0-9 А-Яа-я]{3,45}'::text),
+    CONSTRAINT "CK_User_Username" CHECK (username::text ~ '^[A-Za-z0-9 А-Яа-я]{3,45}'::text),
     CONSTRAINT CK_Email CHECK (email::text ~ '^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$'::text),
     CONSTRAINT CK_Password_strength CHECK (password::text ~ '^[A-Za-z0-9#$&\/%-\._]{8,60}$'::text)
     );

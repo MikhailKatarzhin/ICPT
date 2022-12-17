@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Personality {
     @Id
     @Column(name = "series_and_number", nullable = false, length = 10)
-    private String id;
+    private String seriesAndNumber;
 
     @Column(name = "firstname", nullable = false, length = 45)
     private String firstname;

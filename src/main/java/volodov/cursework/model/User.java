@@ -30,7 +30,7 @@ public class User {
     private String password;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
-    private Personality personalities;
+    private Personality personality;
 
     @OneToMany(mappedBy = "driver")
     private Set<Trip> trips = new LinkedHashSet<>();

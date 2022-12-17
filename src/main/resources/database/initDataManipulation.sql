@@ -8,7 +8,21 @@ ON CONFLICT (id)
 INSERT INTO
     "user" (id, email, username, role_id, password)
 VALUES
-    (0, 'volodov@mail.ru', 'Пофессор Володов', 1, '$2a$10$m/GwtXT2pD5VeGgpdGkNLeZVg9C0NG/sRhiPkkvKXrZj6wXtiUJze')
+    (1, 'vodila@mail.ru', 'Driver', 2, '$2a$10$iKUU3zfxo02jG21GsJsq/.oDu/YUIencDrMmz1kkg0pHE6XFYmSSy')
+ON CONFLICT (id)
+    DO NOTHING;
+
+INSERT INTO
+    personality (series_and_number, firstname, lastname, patronymic, user_id)
+VALUES
+    ('0000000001', 'Водила', 'Водятлов', 'Водятлович', 1)
+ON CONFLICT (series_and_number)
+    DO NOTHING;
+
+INSERT INTO
+    "user" (id, email, username, role_id, password)
+VALUES
+    (0, 'volodov@mail.ru', 'Пофессор Володов', 1, '$2a$10$iKUU3zfxo02jG21GsJsq/.oDu/YUIencDrMmz1kkg0pHE6XFYmSSy')
 ON CONFLICT (id)
     DO NOTHING;
 
