@@ -1,0 +1,11 @@
+
+services:
+  postgre:
+    image: postgres:14.5
+    command: postgres -c 'max_connections=200'
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: "head_of_company"
+      POSTGRES_DB: "Intercity_passenger_transportation"
+      POSTGRES_PASSWORD: "volodov2022"
