@@ -1,9 +1,16 @@
 package volodov.cursework.model;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Table(name = "route_sequence")
 public class RouteSequence {
     @Id
@@ -21,37 +28,5 @@ public class RouteSequence {
 
     @Column(name = "arrival_time", nullable = false)
     private Instant arrivalTime;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Trip getTrip() {
-        return trip;
-    }
-
-    public void setTrip(Trip trip) {
-        this.trip = trip;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public Instant getArrivalTime() {
-        return arrivalTime;
-    }
-
-    public void setArrivalTime(Instant arrivalTime) {
-        this.arrivalTime = arrivalTime;
-    }
 
 }

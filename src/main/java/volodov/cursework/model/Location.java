@@ -1,10 +1,17 @@
 package volodov.cursework.model;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Table(name = "location")
 public class Location {
     @Id
@@ -17,29 +24,4 @@ public class Location {
 
     @OneToMany(mappedBy = "location")
     private Set<RouteSequence> routeSequences = new LinkedHashSet<>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<RouteSequence> getRouteSequences() {
-        return routeSequences;
-    }
-
-    public void setRouteSequences(Set<RouteSequence> routeSequences) {
-        this.routeSequences = routeSequences;
-    }
-
 }
