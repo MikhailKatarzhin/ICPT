@@ -17,17 +17,10 @@
         </tr>
 
         <tr>
-            <td>
-                <span th:text="${trip.departureTime}"></span>
-            </td>
-
+            <td th:text="${trip.departureTime}"></td>
             <td th:text="${trip.status.name}"></td>
-
             <td th:text="${trip.places}"></td>
-
-            <td>
-                <span th:text="${trip.cost}"></span>
-            </td>
+            <td th:text="${trip.cost}"></td>
         </tr>
 
         <tr>
@@ -44,6 +37,14 @@
                 <input type="submit" value="Отменить поездку" class="w-100 btn btn-sm btn-dark" th:disabled="${trip.status.getId()} > 3">
             </form></td>
         </tr>
+        <tr>
+            <td></td>
+
+            <td colspan="2"><form th:action="@{/driver/manage/trip/__${trip.id}__/addLocation}" method="get">
+                <input class="w-100 btn btn-lg btn-primary" type="submit" value="Добавить локацию">
+            </form></td>
+            <td></td>
+        </tr>
     </table>
     <table class="table table-striped table-sm table-responsive">
         <tr>
@@ -51,7 +52,7 @@
             <th scope="col">Локация</th>
             <th scope="col">Время прибытия</th>
         </tr>
-        <tr th:each="routeSequence : ${trip.getRouteSequences()}">
+        <tr th:each="routeSequence : ${routeSequences}">
             <td></td>
             <td th:text="${routeSequence.location.name}"></td>
             <td th:text="${routeSequence.arrivalTime}"></td>

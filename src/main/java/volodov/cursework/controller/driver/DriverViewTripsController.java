@@ -50,7 +50,6 @@ public class DriverViewTripsController extends AbstractPrimaryPagingController {
     @GetMapping("/add")
     public String driverAddForm(ModelMap model) {
         Instant departureTime = Instant.now().plus(30, ChronoUnit.MINUTES);
-        String time = departureTime.toString();
         Short places = 1;
         Long cost = 0L;
         model.addAttribute("time", departureTime);

@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.Instant;
 
 @Entity
 @Getter
@@ -27,6 +27,6 @@ public class RouteSequence {
     private Location location;
 
     @Column(name = "arrival_time", nullable = false)
-    private Timestamp arrivalTime;
+    private Instant arrivalTime;
 
 }
