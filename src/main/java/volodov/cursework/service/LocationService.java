@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static volodov.cursework.config.ProjectConstants.LOCATION_ROW_COUNT;
-import static volodov.cursework.config.ProjectConstants.ROW_COUNT;
 
 @Service
 public class LocationService {
@@ -49,6 +48,12 @@ public class LocationService {
         if (countLikeLocationName(locationName) == 0)
             return new LinkedList<>();
         return locationRepository.getLikeName("%"+locationName+"%");
+    }
+
+    public Location findOneLikeLocationName(String locationName){
+        if (countLikeLocationName(locationName) == 0)
+            return null;
+        return locationRepository.getOneLikeName("%"+locationName+"%");
     }
 
     public Long pageCount(){

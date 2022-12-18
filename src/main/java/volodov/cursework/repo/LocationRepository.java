@@ -40,6 +40,13 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
     List<Location> getLikeName(String name);
 
     @Query(
+            value = "select * from location where name ILIKE ?1" +
+                    " ORDER BY name",
+            nativeQuery = true
+    )
+    Location getOneLikeName(String name);
+
+    @Query(
             value = "select COUNT(*) from location where name = ?",
             nativeQuery = true
     )

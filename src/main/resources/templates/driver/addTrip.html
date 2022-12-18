@@ -25,6 +25,11 @@
             <input type="number" min="1" max="200" th:width="600"
                    id="floatingPlaces" th:value="${places}" name="places" required>
         </div>
+        <p>Стоимость поездки: </p>
+        <div class="form-floating">
+            <input type="number" min="0" max="150000" th:width="600"
+                   id="floatingCost" th:value="${cost}" name="cost" required>
+        </div>
     </div>
     <button class="w-100 btn btn-lg btn-primary" type="submit">Добавить поездку</button>
 </form>

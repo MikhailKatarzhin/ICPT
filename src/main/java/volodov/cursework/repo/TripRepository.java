@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface TripRepository extends JpaRepository<Trip, Long> {
 
+    Trip getById(Long id);
+
     @Query(
             value = "select COUNT(*) from trip where driver_id = ?1",
             nativeQuery = true

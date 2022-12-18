@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS trip
     id bigserial NOT NULL,
     status_id bigint NOT NULL,
     places smallint NOT NULL,
+    cost bigint NOT NULL,
     driver_id bigint NOT NULL,
     departure_time TIMESTAMP NOT NULL,
     CONSTRAINT PK_Trip_Id PRIMARY KEY (id),
@@ -65,6 +66,7 @@ CREATE TABLE IF NOT EXISTS trip
         ON UPDATE cascade
         ON DELETE NO ACTION,
     CONSTRAINT CH_Trip_Places CHECK ( places > 0 AND places < 201 ),
+    CONSTRAINT CH_Trip_Cost CHECK ( cost >= 0 AND cost < 150000 ),
     CONSTRAINT CH_Route_Departure_time CHECK (departure_time > now()),
     CONSTRAINT FK_Trip_occupies_Driver FOREIGN KEY (driver_id)
         REFERENCES "user" (id) MATCH SIMPLE

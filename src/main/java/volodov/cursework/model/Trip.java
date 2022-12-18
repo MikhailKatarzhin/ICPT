@@ -27,6 +27,9 @@ public class Trip {
     @Column(name = "places", nullable = false)
     private Short places;
 
+    @Column(name = "cost", nullable = false)
+    private Long cost;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "driver_id", nullable = false)
     private User driver;

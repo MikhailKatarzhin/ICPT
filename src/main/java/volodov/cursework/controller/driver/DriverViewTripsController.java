@@ -52,21 +52,24 @@ public class DriverViewTripsController extends AbstractPrimaryPagingController {
         Instant departureTime = Instant.now().plus(30, ChronoUnit.MINUTES);
         String time = departureTime.toString();
         Short places = 1;
+        Long cost = 0L;
         model.addAttribute("time", departureTime);
         model.addAttribute("places", places);
+        model.addAttribute("cost", cost);
         return "driver/addTrip";
     }
 
     @PostMapping("/add")
-    public String driverAdd(String time, Short places, ModelMap model) {
+    public String driverAdd(String time, Short places, Long cost, ModelMap model) {
         Trip trip = new Trip();
         time = time + ":00.000000z";
         trip.setDepartureTime(Instant.parse(time));
-        trip.setPlaces(places);
         if (trip.getDepartureTime().isBefore(Instant.now().plus(30, ChronoUnit.MINUTES))) {
-            model.addAttribute("invalidDepartureTime", "Неверное время отправления");
+            model.addAttribute("invalidDepartureTime", "Неверное время отправления - осталось меньше получаса");
             return "driver/addTrip";
         }
+        trip.setPlaces(places);
+        trip.setCost(cost);
         trip.setStatus(tripStatusService.getById(1L));
         trip.setDriver(userService.getRemoteUser());
         tripService.save(trip);

@@ -22,6 +22,10 @@ public class TripService {
         this.userService = userService;
     }
 
+    public Trip getById(Long tripId){
+        return tripRepository.getById(tripId);
+    }
+
     public Long countByRemoteDriver(){
         return countByDriverId(userService.getRemoteUserId());
     }

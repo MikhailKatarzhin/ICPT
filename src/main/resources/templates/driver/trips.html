@@ -32,9 +32,9 @@
             <td th:text="${trip.places}"></td>
             <td th:text="${trip.getBills().size()}"></td>
             <td th:text="${trip.getRouteSequences().size()}"></td>
-<!--            <td><form th:action="@{/profile/__${user.id}__}" method="get">-->
-<!--                <input class="w-100 btn btn-sm btn-danger" type="submit" value="Проверить профиль водителя">-->
-<!--            </form></td>-->
+            <td><form th:action="@{/driver/manage/trip/__${trip.id}__}" method="get">
+                <input class="w-100 btn btn-sm btn-danger" type="submit" value="Просмотр поездки">
+            </form></td>
         </tr>
         <tr th:if="${trips.isEmpty()}"><td colspan="8" class="text-center">
             <h5>Поездки ещё не зарегистрированы!</h5>
