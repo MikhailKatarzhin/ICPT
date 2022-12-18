@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS "user"
     REFERENCES role (id) MATCH SIMPLE
     ON UPDATE CASCADE
     ON DELETE NO ACTION,
-    CONSTRAINT "CK_User_Username" CHECK (username::text ~ '^[A-Za-z0-9 А-Яа-я]{3,45}'::text),
+    CONSTRAINT "CK_User_Username" CHECK (username::text ~ '^[A-Za-z0-9 А-Яа-яЁё-]{3,45}'::text),
     CONSTRAINT CK_Email CHECK (email::text ~ '^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$'::text),
     CONSTRAINT CK_Password_strength CHECK (password::text ~ '^[A-Za-z0-9#$&\/%-\._]{8,60}$'::text)
     );
@@ -37,9 +37,9 @@ CREATE TABLE IF NOT EXISTS personality
     REFERENCES "user" (id) MATCH SIMPLE
     ON UPDATE cascade
     ON DELETE NO ACTION,
-    CONSTRAINT CK_Personality_Name CHECK (firstname::text ~ '^[ А-Яа-я]{2,45}$'::text),
-    CONSTRAINT CK_Personality_Lastname CHECK (lastname::text ~ '^[ А-Яа-я]{2,45}$'::text),
-    CONSTRAINT CK_Personality_Patronymic CHECK (patronymic::text ~ '^[ А-Яа-я]{2,45}$'::text),
+    CONSTRAINT CK_Personality_Name CHECK (firstname::text ~ '^[ А-Яа-яЁё]{2,45}$'::text),
+    CONSTRAINT CK_Personality_Lastname CHECK (lastname::text ~ '^[ А-Яа-яЁё-]{2,45}$'::text),
+    CONSTRAINT CK_Personality_Patronymic CHECK (patronymic::text ~ '^[ А-Яа-яЁё]{2,45}$'::text),
     CONSTRAINT CK_Personality_Series_and_number CHECK (series_and_number::text ~ '^[0-9]{10}$'::text)
     );
 
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS trip_status
     name character varying(45) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT PK_Trip_status_Id PRIMARY KEY (id),
     CONSTRAINT UQ_Trip_status_Name UNIQUE (name),
-    CONSTRAINT CH_Trip_status_Name CHECK (name::text ~ '^[А-Яа-я]{3,45}$'::text)
+    CONSTRAINT CH_Trip_status_Name CHECK (name::text ~ '^[ А-Яа-яЁё]{3,45}$'::text)
 );
 
 CREATE TABLE IF NOT EXISTS trip
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS location
     id bigserial NOT NULL,
     name character varying(45) COLLATE pg_catalog.default NOT NULL,
     CONSTRAINT PK_Location_Id PRIMARY KEY (id),
-    CONSTRAINT CH_Location_Name CHECK (name::text ~ '^[А-Яа-я [punct]{4,45}$'::text)
+    CONSTRAINT CH_Location_Name CHECK (name::text ~ '^[А-Яа-яЁё ,.-]{4,45}$'::text)
 );
 
 CREATE TABLE IF NOT EXISTS route_sequence
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS bill_status
     name character varying(45) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT PK_Bill_status_Id PRIMARY KEY (id),
     CONSTRAINT UQ_Bill_status_Name UNIQUE (name),
-    CONSTRAINT CH_Bill_status_Name CHECK (name::text ~ '^[А-Яа-я]{3,45}$'::text)
+    CONSTRAINT CH_Bill_status_Name CHECK (name::text ~ '^[А-Яа-яЁё]{3,45}$'::text)
 );
 
 CREATE TABLE IF NOT EXISTS bill

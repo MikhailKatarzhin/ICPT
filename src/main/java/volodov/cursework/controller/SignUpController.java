@@ -45,7 +45,7 @@ public class SignUpController {
     }
 
     public static ModelMap checkRegistrationData(@RequestParam String confirmPassword, User user, Personality personality, ModelMap model, UserService userService, PersonalityService personalityService) {
-        if (userService.getByUsername(user.getUsername()) != null || !user.getUsername().matches("[A-Za-z0-9 А-Яа-я]{3,45}")) {
+        if (userService.getByUsername(user.getUsername()) != null || !user.getUsername().matches("[A-Za-z0-9 А-Яа-яЁё-]{3,45}")) {
             model.addAttribute("usernameExistsError", "Username input error");
         }
 
@@ -65,17 +65,17 @@ public class SignUpController {
             model.addAttribute("personalityExistsError", "Series and number input error! Только 10 цифр");
         }
 
-        if (personality.getFirstname().isBlank() || personality.getFirstname() == null || !personality.getFirstname().matches("[ А-Яа-я]{2,45}$")) {
+        if (personality.getFirstname().isBlank() || personality.getFirstname() == null || !personality.getFirstname().matches("[ А-Яа-яЁё]{2,45}$")) {
             model.addAttribute("firstnameIsBlankError", "Firstname input error! Только кириллица, от 2 до 35");
         }
 
-        if (personality.getLastname().isBlank() || personality.getLastname() == null || !personality.getLastname().matches("[ А-Яа-я]{2,45}$")) {
+        if (personality.getLastname().isBlank() || personality.getLastname() == null || !personality.getLastname().matches("[ А-Яа-яЁё-]{2,45}$")) {
             model.addAttribute("lastnameIsBlankError", "Lastname input error! Только кириллица, от 2 до 35");
         }
 
         if (personality.getPatronymic().isBlank() || personality.getPatronymic() == null)
             personality.setPatronymic("Отсутствует");
-        if (personality.getPatronymic().isEmpty() || personality.getLastname() == null || !personality.getPatronymic().matches("[ А-Яа-я]{2,45}$")) {
+        if (personality.getPatronymic().isEmpty() || personality.getLastname() == null || !personality.getPatronymic().matches("[ А-Яа-яЁё]{2,45}$")) {
             model.addAttribute("PatronymicIsInputError", "Patronymic input error! Только кириллица или ничего");
         }
         return model;
