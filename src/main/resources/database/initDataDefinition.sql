@@ -77,6 +77,7 @@ CREATE TABLE IF NOT EXISTS location
     id bigserial NOT NULL,
     name character varying(45) COLLATE pg_catalog.default NOT NULL,
     CONSTRAINT PK_Location_Id PRIMARY KEY (id),
+    CONSTRAINT UQ_Location_Name UNIQUE (name),
     CONSTRAINT CH_Location_Name CHECK (name::text ~ '^[А-Яа-яЁё ,.-]{4,45}$'::text)
 );
 

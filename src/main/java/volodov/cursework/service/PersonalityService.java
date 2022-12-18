@@ -8,7 +8,7 @@ import volodov.cursework.repo.PersonalityRepository;
 @Service
 public class PersonalityService{
 
-    PersonalityRepository personalityRepository;
+    private final PersonalityRepository personalityRepository;
 
     @Autowired
     public PersonalityService(PersonalityRepository personalityRepository) {

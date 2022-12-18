@@ -76,7 +76,7 @@ ON CONFLICT (series_and_number)
 INSERT INTO
     "user" (id, email, username, role_id, password)
 VALUES
-    (0, 'volodov@mail.ru', 'Пофессор Володов', 1, '$2a$10$iKUU3zfxo02jG21GsJsq/.oDu/YUIencDrMmz1kkg0pHE6XFYmSSy')
+    (0, 'volodov@mail.ru', 'Профессор Володов', 3, '$2a$10$iKUU3zfxo02jG21GsJsq/.oDu/YUIencDrMmz1kkg0pHE6XFYmSSy')
 ON CONFLICT (id)
     DO NOTHING;
 

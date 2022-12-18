@@ -13,6 +13,7 @@ import volodov.cursework.repo.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static volodov.cursework.config.ProjectConstants.ROW_COUNT;
@@ -112,6 +113,8 @@ public class UserService{
     }
 
     public List<User> driverListByNumberPageList(long currentPage){
+        if (userRepository.countByRoleId(2L) == 0)
+            return new LinkedList<>();
         return userRepository.selectByRoleIdAndLimitOffset(2L, ROW_COUNT, (currentPage - 1) * ROW_COUNT);
     }
 }
