@@ -12,12 +12,6 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                        <li class="nav-item" sec:authorize="hasAuthority('CONSUMER')">
-                            <a class="nav-link active" aria-current="page" th:href="@{/contract}">Для потребителей</a>
-                        </li>
-                        <li class="nav-item" sec:authorize="hasAuthority('PROVIDER')">
-                            <a class="nav-link active" aria-current="page" th:href="@{/tariff}">Для водителей</a>
-                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Профиль
@@ -54,6 +48,19 @@
                                 </form></li>
                                 <li><form th:action="@{/administration/locations}">
                                     <button type="submit" class="dropdown-item">Просмотр локаций</button>
+                                </form></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown" sec:authorize="hasAuthority('ВОДИТЕЛЬ')">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Управление поездками
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                <li><form th:action="@{/driver/trips}">
+                                    <button type="submit" class="dropdown-item">Перечень поездок</button>
+                                </form></li>
+                                <li><form th:action="@{/driver/trips/add}">
+                                    <button type="submit" class="dropdown-item">Добавить поездку</button>
                                 </form></li>
                             </ul>
                         </li>

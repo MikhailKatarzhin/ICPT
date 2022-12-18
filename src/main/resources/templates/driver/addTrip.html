@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Новая поездка</title>
+    <link rel="stylesheet" type="text/css"
+          href="/webjars/bootstrap/5.1.1/css/bootstrap.min.css" />
+</head>
+<body>
+<div th:insert="~{fragments/navigation_fragments  :: navbar}"></div>
+<form th:action="@{/driver/trips/add}" method="post" class="m-auto col-3 text-center">
+    <div>
+        <h1 class="h3 mb-3 fw-normal">Регистрация новой поездки</h1>
+
+        <div class="mt-1 mb-1 text-muted" th:if="${param.error}">Неверно заполнены поля.</div>
+        <div class="form-floating">
+            <input type="datetime-local" th:class="'form-control'+(${invalidDepartureTime!=null}?' is-invalid':'')"
+                   min="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}"
+                   id="floatingDepartureTime" th:value="${time}" name="time" placeholder="Время отправления" required>
+            <label for="floatingDepartureTime" th:text="${invalidDepartureTime==null}?'Время отправления ':${invalidDepartureTime}"></label>
+        </div>
+        <p>Посадочные места </p>
+        <div class="form-floating">
+            <input type="number" min="1" max="200" th:width="600"
+                   id="floatingPlaces" th:value="${places}" name="places" required>
+        </div>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Добавить поездку</button>
+</form>
+<script type="text/javascript"
+        src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+
+<script type="text/javascript"
+        src="/webjars/bootstrap/5.1.1/js/bootstrap.min.js"></script>
+</body>
+</html>
