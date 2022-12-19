@@ -36,17 +36,12 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
     List<Bill> findByConsumerId(Long consumerId);
 
     @Query(
-            value = "select * from bill where consumer_id=?1",
-            nativeQuery = true
-    )
-    List<Bill> findByConsumerIdAndLimitOffset(Long consumerId, long limit, long offset);
-
-    @Query(
             value = "select * from bill" +
                     " inner join trip t on bill.trip_id = t.id" +
                     " where consumer_id=?1" +
-                    " order by t.departure_time desc",
+                    " order by bill.status_id asc , t.departure_time desc" +
+                    " limit ?2 offset ?3",
             nativeQuery = true
     )
-    List<Bill> findByConsumerIdOrderByDepartureTime(Long consumerId);
+    List<Bill> findByConsumerIdAndLimitOffset(Long consumerId, long limit, long offset);
 }

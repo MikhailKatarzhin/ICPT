@@ -22,6 +22,10 @@ public class BillService {
         this.userService = userService;
     }
 
+    public Bill getById(Long id){
+        return billRepository.getById(id);
+    }
+
     public Bill save(Bill bill){
         return billRepository.save(bill);
     }
