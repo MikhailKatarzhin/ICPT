@@ -27,8 +27,8 @@
         <tr>
             <td></td>
 
-            <td colspan="2"><form th:action="@{/consumer/manage/trip/__${trip.id}__/billPay}" method="get">
-                <input class="w-100 btn btn-lg btn-primary" type="submit" value="Купить Билет" th:disabled="(${trip.status.getId()} != 1) || !(trip.places > trip.bills.size())">
+            <td colspan="3"><form th:action="@{/consumer/manage/trip/__${trip.id}__/billPay}" method="post">
+                <input class="w-100 btn btn-lg btn-primary" type="submit" value="Купить Билет" th:disabled="(${trip.status.getId()} != 2) or !(${trip.places} > ${trip.bills.size()})">
             </form></td>
             <td></td>
         </tr>
@@ -44,6 +44,7 @@
             <td></td>
             <td th:text="${routeSequence.location.name}"></td>
             <td th:text="${routeSequence.arrivalTime}"></td>
+            <td></td>
         </tr>
     </table>
 <script type="text/javascript"

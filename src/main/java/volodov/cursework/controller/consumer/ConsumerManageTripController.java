@@ -49,7 +49,7 @@ public class ConsumerManageTripController {
     @PreAuthorize("(hasAuthority('ПОТРЕБИТЕЛЬ'))")
     public String billPay(@PathVariable Long tripId, ModelMap model) {
         Trip trip = tripService.getById(tripId);
-        if (trip.getStatus().getId() != 1L || trip.getBills().size() >= trip.getPlaces())
+        if (trip.getStatus().getId() != 2L || trip.getBills().size() >= trip.getPlaces())
             return "redirect:/consumer/manage/trip/" + tripId;
         Instant time = Instant.now().plus(30, ChronoUnit.MINUTES);
         if (trip.getDepartureTime().isBefore(time))
@@ -58,6 +58,7 @@ public class ConsumerManageTripController {
         bill.setConsumer(userService.getRemoteUser());
         bill.setTrip(trip);
         bill.setConsumer(userService.getRemoteUser());
+        bill.setStatus(billStatusService.getById(1L));
         bill = billService.save(bill);
         trip = tripService.getById(tripId);
         if (trip.getBills().size() < trip.getPlaces()) {
