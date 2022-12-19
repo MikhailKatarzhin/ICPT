@@ -9,7 +9,7 @@
 </head>
 <body>
 <div th:insert="~{fragments/navigation_fragments  :: navbar}"></div>
-<form th:action="@{/driver/manage/trip/__${trip.getId()}__/addLocation}" method="post" class="m-auto col-3 text-center">
+<form th:action="@{/driver/manage/trip/__${tripId}__/addLocation}" method="post" class="m-auto col-3 text-center">
     <div>
         <h1 class="h1 mb-3 fw-normal">Добавляем локацию к поездке</h1>
         <h3 class="h3 mb-3 fw-normal" th:text="${'Время отправления: '}" ></h3>

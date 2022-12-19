@@ -53,8 +53,7 @@ public class DriverManageTripController {
         if (statusId == 5 && trip.getStatus().getId() < 4)
             trip.setStatus(tripStatusService.getById(statusId));
         tripService.save(trip);
-        model.addAttribute("trip", trip);
-        return "driver/tripManage";
+        return "redirect:/driver/manage/trip/" + tripId;
     }
 
     @PostMapping("/{tripId}/deleteLocation/{routeSequenceId}")
@@ -81,6 +80,7 @@ public class DriverManageTripController {
     @PreAuthorize("(@userService.getRemoteUser().getId() == @tripService.getById(#tripId).getDriver().getId())")
     public String addLocation(@PathVariable Long tripId, String time, String locationName, ModelMap model) {
         Trip trip = tripService.getById(tripId);
+        model.addAttribute("trip", trip);
         Location location = locationService.findOneLikeLocationName(locationName);
         if (trip.getStatus().getId() != 1L || location == null)
             return "redirect:/driver/manage/trip/" + tripId;

@@ -40,8 +40,8 @@
         <tr>
             <td></td>
 
-            <td colspan="2"><form th:action="@{/driver/manage/trip/__${trip.id}__/addLocation}" method="get" th:disabled="${trip.status.getId()} != 1">
-                <input class="w-100 btn btn-lg btn-primary" type="submit" value="Добавить локацию">
+            <td colspan="2"><form th:action="@{/driver/manage/trip/__${trip.id}__/addLocation}" method="get">
+                <input class="w-100 btn btn-lg btn-primary" type="submit" value="Добавить локацию" th:disabled="${trip.status.getId()} != 1">
             </form></td>
             <td></td>
         </tr>
