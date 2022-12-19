@@ -42,6 +42,24 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
     Long countByDepartureTimeIntervalAndStatusId(Instant departureTimeMin, Instant departureTimeMax, Long statusId);
 
     @Query(
+            value = "SELECT COUNT(*) FROM trip" +
+                    " WHERE departure_time > now()" +
+                    " AND status_id = ?1",
+            nativeQuery = true
+    )
+    Long countByNowAndStatusId(Long statusId);
+
+    @Query(
+            value = "SELECT * FROM trip" +
+                    " WHERE departure_time > NOW()" +
+                    " AND status_id = ?1" +
+                    " order by departure_time desc " +
+                    " limit ?2 offset ?3",
+            nativeQuery = true
+    )
+    List<Trip> findByNowAndStatusIdAndLimitOffset(Long statusId, Long limit, Long offset);
+
+    @Query(
             value = "select * from trip where driver_id = ?1" +
                     " order by departure_time desc" +
                     " limit ?2 offset ?3",

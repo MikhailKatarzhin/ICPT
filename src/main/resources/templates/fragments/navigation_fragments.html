@@ -64,6 +64,19 @@
                                 </form></li>
                             </ul>
                         </li>
+                        <li class="nav-item dropdown" sec:authorize="hasAuthority('ПОТРЕБИТЕЛЬ')">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Для потребителей
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                <li><form th:action="@{/consumer/trips}">
+                                    <button type="submit" class="dropdown-item">Все доступные поездки</button>
+                                </form></li>
+                                <li><form><!--th:action="@{/consumer/bills}"-->
+                                    <button type="submit" class="dropdown-item">Ваши билеты</button>
+                                </form></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>

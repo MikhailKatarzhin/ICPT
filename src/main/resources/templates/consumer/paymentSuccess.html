@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Успешная оплата</title>
+    <link rel="stylesheet" type="text/css"
+          href="/webjars/bootstrap/5.1.1/css/bootstrap.min.css" />
+</head>
+<body>
+<div th:insert="~{fragments/navigation_fragments  :: navbar}"></div>
+<h1>Ваш билет оплачен, [[${#httpServletRequest.remoteUser}]]!</h1>
+<form th:action="@{/consumer/manage/trip/__${tripId}__}" method="get">
+    <input class="w-100 btn btn-lg btn-primary" type="submit" value="Вернуться к поездке">
+</form>
+<form th:action="@{/consumer/manage/bill/__${billId}__}" method="get">
+    <input class="w-100 btn btn-lg btn-primary" type="submit" value="Перейти к билету">
+</form>
+<script type="text/javascript"
+        src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+
+<script type="text/javascript"
+        src="/webjars/bootstrap/5.1.1/js/bootstrap.min.js"></script>
+</body>
+</html>
