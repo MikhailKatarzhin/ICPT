@@ -53,7 +53,7 @@ public class LocationService {
     public Location findOneLikeLocationName(String locationName){
         if (countLikeLocationName(locationName) == 0)
             return null;
-        return locationRepository.getOneLikeName("%"+locationName+"%");
+        return findLikeLocationName(locationName).get(0);
     }
 
     public Long pageCount(){

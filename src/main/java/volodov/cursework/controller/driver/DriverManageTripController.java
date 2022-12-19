@@ -57,13 +57,19 @@ public class DriverManageTripController {
         return "driver/tripManage";
     }
 
+    @PostMapping("/{tripId}/deleteLocation/{routeSequenceId}")
+    @PreAuthorize("(@userService.getRemoteUser().getId() == @tripService.getById(#tripId).getDriver().getId())")
+    public String deleteLocation(@PathVariable Long tripId, @PathVariable Long routeSequenceId) {
+        routeSequenceService.delete(routeSequenceId);
+        return "redirect:/driver/manage/trip/" + tripId;
+    }
 
     @GetMapping("/{tripId}/addLocation")
     @PreAuthorize("(@userService.getRemoteUser().getId() == @tripService.getById(#tripId).getDriver().getId())")
     public String getAddLocationForm(@PathVariable Long tripId, ModelMap model) {
         Trip trip = tripService.getById(tripId);
         if (trip.getStatus().getId() != 1L)
-            return "refirect:/driver/manage/trip/" + tripId;
+            return "redirect:/driver/manage/trip/" + tripId;
         Instant arrivalTime = Instant.now().plus(30, ChronoUnit.MINUTES);
         model.addAttribute("trip", trip);
         model.addAttribute("time", arrivalTime);
@@ -86,6 +92,7 @@ public class DriverManageTripController {
         }
         routeSequence.setLocation(location);
         routeSequence.setTrip(trip);
+        model.addAttribute("routeSequences", routeSequenceService.getByTripId(tripId));
         routeSequenceService.save(routeSequence);
         return "redirect:/driver/manage/trip/" + tripId;
     }

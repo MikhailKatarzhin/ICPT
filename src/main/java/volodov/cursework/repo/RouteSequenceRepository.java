@@ -18,4 +18,11 @@ public interface RouteSequenceRepository extends JpaRepository<RouteSequence, Lo
             nativeQuery = true
     )
     List<RouteSequence> getByTripId(Long tripId);
+
+    @Query(
+            value = "select count(*) from route_sequence" +
+                    " where id = ?1",
+            nativeQuery = true
+    )
+    Long countById(Long routeSequenceId);
 }

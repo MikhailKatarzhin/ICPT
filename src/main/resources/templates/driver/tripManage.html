@@ -40,7 +40,7 @@
         <tr>
             <td></td>
 
-            <td colspan="2"><form th:action="@{/driver/manage/trip/__${trip.id}__/addLocation}" method="get">
+            <td colspan="2"><form th:action="@{/driver/manage/trip/__${trip.id}__/addLocation}" method="get" th:disabled="${trip.status.getId()} != 1">
                 <input class="w-100 btn btn-lg btn-primary" type="submit" value="Добавить локацию">
             </form></td>
             <td></td>
@@ -51,14 +51,15 @@
             <th></th>
             <th scope="col">Локация</th>
             <th scope="col">Время прибытия</th>
+            <th></th>
         </tr>
         <tr th:each="routeSequence : ${routeSequences}">
             <td></td>
             <td th:text="${routeSequence.location.name}"></td>
             <td th:text="${routeSequence.arrivalTime}"></td>
-<!--            <td><form th:action="@{/profile/__${user.id}__}" method="get">-->
-<!--                <input class="w-100 btn btn-sm btn-danger" type="submit" value="Проверить профиль водителя">-->
-<!--            </form></td>-->
+            <td><form th:action="@{/driver/manage/trip/__${trip.id}__/deleteLocation/__${routeSequence.id}__}" method="post">
+                <input class="w-100 btn btn-sm btn-danger" type="submit" value="Убрать локацию" th:disabled="${trip.status.getId()} != 1">
+            </form></td>
         </tr>
     </table>
 <script type="text/javascript"
