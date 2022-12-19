@@ -36,7 +36,7 @@
         <td></td>
 
         <td colspan="3"><form th:action="@{/consumer/manage/bill/__${bill.id}__/setStatus/5}" method="post">
-            <input class="w-100 btn btn-lg btn-primary" type="submit" value="Купить Билет" th:hidden="(${bill.status.getId()} != 4)">
+            <input class="w-100 btn btn-lg btn-primary" type="submit" value="Вернуть деньги за Билет" th:hidden="(${bill.status.getId()} != 4)">
         </form></td>
         <td></td>
     </tr>

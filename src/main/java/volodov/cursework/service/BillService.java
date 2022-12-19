@@ -64,4 +64,8 @@ public class BillService {
             return new LinkedList<>();
         return billRepository.findByConsumerIdAndLimitOffset(consumerId, BILL_CONSUMER_ROW_COUNT, (currentPage - 1) * BILL_CONSUMER_ROW_COUNT);
     }
+
+    public void updateAllByNewStatusIdAndTripId(Long newStatusId, Long tripId){
+        billRepository.updateAllByNewStatusIdAndTripId(newStatusId, tripId);
+    }
 }

@@ -2,6 +2,7 @@ package volodov.cursework.controller.driver;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,13 +20,15 @@ import java.time.temporal.ChronoUnit;
 @RequestMapping("/driver/manage/trip")
 public class DriverManageTripController {
 
+    private final BillService billService;
     private final TripStatusService tripStatusService;
     private final TripService tripService;
     private final UserService userService;
     private final LocationService locationService;
     private final RouteSequenceService routeSequenceService;
 
-    public DriverManageTripController(TripStatusService tripStatusService, TripService tripService, UserService userService, LocationService locationService, RouteSequenceService routeSequenceService) {
+    public DriverManageTripController(BillService billService, TripStatusService tripStatusService, TripService tripService, UserService userService, LocationService locationService, RouteSequenceService routeSequenceService) {
+        this.billService = billService;
         this.tripStatusService = tripStatusService;
         this.tripService = tripService;
         this.userService = userService;
@@ -43,15 +46,20 @@ public class DriverManageTripController {
         return "driver/tripManage";
     }
 
+    @Transactional
     @PostMapping("/{tripId}/setStatus/{statusId}")
     @PreAuthorize("(@userService.getRemoteUser().getId() == @tripService.getById(#tripId).getDriver().getId())")
-    public String managementById(@PathVariable Long tripId, @PathVariable Long statusId, ModelMap model) {
+    public String managementById(@PathVariable Long tripId, @PathVariable Long statusId) {
         Trip trip = tripService.getById(tripId);
         if (trip.getStatus().getId() != 5)
-            if (statusId - trip.getStatus().getId() == 1)
+            if (statusId - trip.getStatus().getId() == 1) {
                 trip.setStatus(tripStatusService.getById(statusId));
-        if (statusId == 5 && trip.getStatus().getId() < 4)
+                billService.updateAllByNewStatusIdAndTripId(statusId -1, tripId);
+            }
+        if (statusId == 5 && trip.getStatus().getId() < 4) {
             trip.setStatus(tripStatusService.getById(statusId));
+            billService.updateAllByNewStatusIdAndTripId(statusId -1, tripId);
+        }
         tripService.save(trip);
         return "redirect:/driver/manage/trip/" + tripId;
     }
